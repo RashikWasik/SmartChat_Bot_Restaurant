@@ -1,0 +1,271 @@
+{
+  "name": "SmartChat Bot",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\nMy name is Rashik. How can I assist you today?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b9513a68-4b56-457b-8628-83b4c6b8990a",
+      "name": "When chat message received",
+      "webhookId": "74691f83-e706-418c-b44c-88492557c17e"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/14oFQf2DR8dP-AkkZ6HRnqY_fbqleOL5e8zjnDXOO8fU/edit?usp=drive_link",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/14oFQf2DR8dP-AkkZ6HRnqY_fbqleOL5e8zjnDXOO8fU/edit?gid=237874495#gid=237874495",
+          "mode": "url"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Ques": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Ques', ``, 'string') }}",
+            "Mobile No": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Mobile_No', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "Ques"
+          ],
+          "schema": [
+            {
+              "id": "Ques",
+              "displayName": "Ques",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Mobile No",
+              "displayName": "Mobile No",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        720,
+        240
+      ],
+      "id": "6ee252b2-1415-485a-a00f-41aa3905d61e",
+      "name": "Append row in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2ZP7DSLcCoSjgwkB",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-safeguard-20b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        48,
+        320
+      ],
+      "id": "d880c387-25d2-415b-8b21-99d9a4a68e51",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "g05OG1QlSofmlfuX",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "- You are a smart helpful assistant\n- You talk like a friendly human\n- When an user asks a question use all the tools (tool-1, tool-2, tool-3)\n\n- If none of the sheets have the answer :\nask for the users number\nwhen he gives phone number: \ntell \"Thank you, our team will contact you\" and add the question in the Q&A sheet \nand add the phone number also\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "36fa0e67-4dad-4d1e-b018-3be295ccb049",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/14oFQf2DR8dP-AkkZ6HRnqY_fbqleOL5e8zjnDXOO8fU/edit?usp=drive_link",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/14oFQf2DR8dP-AkkZ6HRnqY_fbqleOL5e8zjnDXOO8fU/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        416,
+        304
+      ],
+      "id": "73a52b89-df6d-4e3c-864d-66731cc7ebe2",
+      "name": "Inventory Sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2ZP7DSLcCoSjgwkB",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/14oFQf2DR8dP-AkkZ6HRnqY_fbqleOL5e8zjnDXOO8fU/edit?usp=drive_link",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/14oFQf2DR8dP-AkkZ6HRnqY_fbqleOL5e8zjnDXOO8fU/edit?gid=972457009#gid=972457009",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        560,
+        304
+      ],
+      "id": "f1a34193-042a-479f-915b-30494b5578a7",
+      "name": "FAQ Sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "2ZP7DSLcCoSjgwkB",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        208
+      ],
+      "id": "69f7bc98-b2e4-40b4-8687-54afa9cf0d20",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inventory Sheet": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FAQ Sheet": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "bc2d957f-cbb0-4cea-973d-4efe1793dce0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b90e4f743281a790dd1f38bf52454b2a3002e5234f14ed17824b0be948c7e208"
+  },
+  "id": "lXTofAOSEGoyYIu3",
+  "tags": []
+}
