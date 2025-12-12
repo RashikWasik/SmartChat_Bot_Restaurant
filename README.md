@@ -9,5 +9,4 @@ Features:
 4. Answers customer questions using information from the Common Q&A sheet.
 5. If the customer asks something not found in the Q&A sheet or requests an unavailable item: The agent asks for the customer’s phone number. Saves the question + phone number into the Customer Requests sheet.
 
-
-
+For screenshots and a visual overview of the workflow, please check the Features.pdf file included in this repository.
